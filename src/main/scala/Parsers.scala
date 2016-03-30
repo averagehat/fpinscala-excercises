@@ -9,7 +9,6 @@ import language.implicitConversions
 case class Hole() {}
 trait Parsers[Parser[+_]] { self => // so inner classes may call methods of trait
   type  Parser[+A] = Location => Result[A]
-  println("FOOFO")
   val json =  """
 {"foo" : [ 1, 3, 4, 5  ]}
 """
@@ -139,7 +138,6 @@ abZbaba
   val digits = regex("[0-9]+?(\\.[0-9]+)".r)
   val ws = regex("\\s+".r)
   val aba =  string("a") ** string("b") ** string("a")
-  println("FOOFO")
   /*
    * A default `succeed` implementation in terms of `string` and `map`.
    * We leave `succeed` abstract, since `map` is defined below in terms of
@@ -213,7 +211,6 @@ case class ParseError(stack: List[(Location,String)] = List(),
   def push(x: (Location,String)): ParseError = copy(stack = x :: stack)
 
   def main(args: Array[String]) = {
-    println("Hello there")
     //println(jsonParser(Reference))
   }
 

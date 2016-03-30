@@ -20,7 +20,6 @@ object JSON {
     }
 
     def main(args: Array[String]) = {
-      println("Hello there")
       println(jsonParser(Reference))
     }
 

@@ -1,6 +1,6 @@
 import scala.collection.immutable.Stream
 import scala.{Option => _, Some => _, Either => _, _}
-import scalaz.{\/-, -\/, \/}
+//import scalaz.{\/-, -\/, \/}
 trait Stream[+A] {
   import Stream._
   def foldRight[B](z: => B)(f: (A, => B) => B): B = // The arrow `=>` in front of the argument type `B` means that the function `f` takes its second argument by name and may choose not to evaluate it.
@@ -57,9 +57,9 @@ trait Stream[+A] {
     case Cons(h, t) => if (p(h())) t().forAll(p) else false
   }
 
-  def headEither: String \/ A =
-    this.foldRight(-\/("not there"):String \/ A)(
-      (h, e) => if (h == empty) e else \/-(h))
+//  def headEither: String \/ A =
+//    this.foldRight(-\/("not there"):String \/ A)(
+//      (h, e) => if (h == empty) e else \/-(h))
 
   def headOption: Option[A] =
     this.foldRight(None:Option[A])((h, _) => if (h == Empty) None else Some(h))
@@ -124,50 +124,52 @@ object Stream {
       case None => empty
     }
 
-  def from(n: Int) = unfold(n.)(
+  //def from(n: Int) = unfold(n.)(
 
 }
-fib(5)
-val ones: Stream[Int] = Stream.cons(1, ones)
-ones.exists(1 == _)
-ones.find(1 == _)
-Stream(1, 2, 3, 4).toList()
-Stream(1, 2, 3, 4).takeWhile(_ < 3).toList()
-Stream('a, 'b, 'c, 'd, 'e).take(3).toList()
-Stream('a, 'b, 'c, 'd, 'e).drop(3).toList()
-Stream('a, 'b, 'c, 'd, 'e).forAll(_ == 'a)
-Stream(1). headOption
-Stream(1). headEither
-Stream() .headOption
-Stream() .headEither
-Stream(9,1 ,2, 3). headOption
-val e = Stream(). headEither
-e.validation.toValidationNel
-Stream(1, 2, 3).map(_ + 2).toList()
-Stream(1, 2, 3).filter(_ % 2 == 0).toList()
-Stream(1, 2, 3).append(Stream(4, 5, 6)).toList //(_ % 2 == 0).toList()
-Stream("a", "b","c").flatMap(x => Stream(x, x)).toList
-Stream.repeat(3).take(3).toList() == List(3, 3, 3)
-ones.exists(1 == _)
-ones.find(1 == _)
-Stream(1, 2, 3, 4).toList()
-Stream(1, 2, 3, 4).takeWhile(_ < 3).toList()
-Stream('a, 'b, 'c, 'd, 'e).take(3).toList()
-Stream('a, 'b, 'c, 'd, 'e).drop(3).toList()
-Stream('a, 'b, 'c, 'd, 'e).forAll(_ == 'a)
-Stream(1). headOption
-Stream(1). headEither
-Stream() .headOption
-Stream() .headEither
-Stream(9,1 ,2, 3). headOption
+
+
+//fib(5)
+//val ones: Stream[Int] = Stream.cons(1, ones)
+//ones.exists(1 == _)
+//ones.find(1 == _)
+//Stream(1, 2, 3, 4).toList()
+//Stream(1, 2, 3, 4).takeWhile(_ < 3).toList()
+//Stream('a, 'b, 'c, 'd, 'e).take(3).toList()
+//Stream('a, 'b, 'c, 'd, 'e).drop(3).toList()
+//Stream('a, 'b, 'c, 'd, 'e).forAll(_ == 'a)
+//Stream(1). headOption
+//Stream(1). headEither
+//Stream() .headOption
+//Stream() .headEither
+//Stream(9,1 ,2, 3). headOption
 //val e = Stream(). headEither
-e.validation.toValidationNel
-Stream(1, 2, 3).map(_ + 2).toList()
-Stream(1, 2, 3).filter(_ % 2 == 0).toList()
-Stream(1, 2, 3).append(Stream(4, 5, 6)).toList //(_ % 2 == 0).toList()
-Stream("a", "b","c").flatMap(x => Stream(x, x)).toList
-Stream.repeat(3).take(3).toList() == List(3, 3, 3)
-Stream.from(3).take(3).toList //== List(3, 4, 5)
-Stream.fibs(4).toList()
+//e.validation.toValidationNel
+//Stream(1, 2, 3).map(_ + 2).toList()
+//Stream(1, 2, 3).filter(_ % 2 == 0).toList()
+//Stream(1, 2, 3).append(Stream(4, 5, 6)).toList //(_ % 2 == 0).toList()
+//Stream("a", "b","c").flatMap(x => Stream(x, x)).toList
+//Stream.repeat(3).take(3).toList() == List(3, 3, 3)
+//ones.exists(1 == _)
+//ones.find(1 == _)
+//Stream(1, 2, 3, 4).toList()
+//Stream(1, 2, 3, 4).takeWhile(_ < 3).toList()
+//Stream('a, 'b, 'c, 'd, 'e).take(3).toList()
+//Stream('a, 'b, 'c, 'd, 'e).drop(3).toList()
+//Stream('a, 'b, 'c, 'd, 'e).forAll(_ == 'a)
+//Stream(1). headOption
+//Stream(1). headEither
+//Stream() .headOption
+//Stream() .headEither
+//Stream(9,1 ,2, 3). headOption
+////val e = Stream(). headEither
+//e.validation.toValidationNel
+//Stream(1, 2, 3).map(_ + 2).toList()
+//Stream(1, 2, 3).filter(_ % 2 == 0).toList()
+//Stream(1, 2, 3).append(Stream(4, 5, 6)).toList //(_ % 2 == 0).toList()
+//Stream("a", "b","c").flatMap(x => Stream(x, x)).toList
+//Stream.repeat(3).take(3).toList() == List(3, 3, 3)
+//Stream.from(3).take(3).toList //== List(3, 4, 5)
+//Stream.fibs(4).toList()
 //Stream.from(3).take(3).toList //== List(3, 4, 5)
 

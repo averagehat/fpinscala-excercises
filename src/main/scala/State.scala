@@ -1,5 +1,5 @@
 package fpinscala.state
-import scalaz._
+//import scalaz._
 
 trait RNG {
   def nextInt: (Int, RNG) // Should generate a random `Int`. We'll later define other functions in terms of `nextInt`.
@@ -125,7 +125,7 @@ object State {
 
   def sequence[S, A](fs: List[State[S, A]]): State[S, List[A]] =
     fs.foldRight(unit[S, List[A]](List[A]()))(map2(_, _)(_ :: _))
-  def simulateMachine(inputs: IList[Input]): State[Machine, (Int, Int)] = State(m => {
+  def simulateMachine(inputs: List[Input]): State[Machine, (Int, Int)] = State(m => {
                                                                                   val machine = inputs.foldLeft(m)(_ nextState _)
                                                                                   machine match {case Machine(_, x, y) => ((x, y), machine)}
                                                                                 })
@@ -133,7 +133,7 @@ object State {
 
 object Test {
  val m = Machine(true, 5, 10)
- val inputs = IList[Input](Coin, Turn, Coin, Turn, Coin, Turn, Turn, Turn, Coin, Turn)
+ val inputs = List[Input](Coin, Turn, Coin, Turn, Coin, Turn, Turn, Turn, Coin, Turn)
   val resultState = State.simulateMachine(inputs).run(m)
   val expected = ((1,14), Machine(true,1,14)) 
   assert(resultState == expected)

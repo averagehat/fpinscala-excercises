@@ -2,6 +2,12 @@ Answers for [__The Red Book__](https://www.manning.com/books/functional-programm
 
 Excercises found: https://github.com/fpinscala/fpinscala
 
+Running:
+
+```bash
+$ sbt run 
+```
+
 scala version is 2.11.7
 sbt.version=0.13.9 
 ensime-sbt version is 0.3.2
