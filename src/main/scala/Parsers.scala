@@ -125,6 +125,12 @@ abZbaba
     flatMap(a)(a => b.map( f(a, _) ))
 
   def product[A,B](p: Parser[A], p2: Parser[B]): Parser[(A,B)] = map2(p, p2)((_,_))
+// probably use implicits for optional whitespace
+  def skipLWS(p: Parser[A], p2: Parser[B]): Parser[B] = 
+    productWS(p, p2) map (_._2)
+  def skipRWS(p: Parser[A], p2: Parser[B]): Parser[B] = 
+    productWS(p, p2) map (_._1)
+  //map2(p, p2)((x, y) => y)
 
   def parseBEncode(c: Char): Parser[List[Char]] =
     flatMap(digits)(x => listOfN(x.toInt, char(c)))
@@ -167,6 +173,7 @@ abZbaba
     def **[B](p2: Parser[B]): Parser[(A,B)] = self.product(p, p2)
     def flatMap[B](f: (A => Parser[B])) = self.flatMap(p)(f)
     def +>[B](p2: Parser[B]): Parser[(A,B)] = self.productWS(p, p2) 
+    def *>[B](p2: Parser[B]): Parser[(A,B)] = self.skipWS(p, p2) 
     def map2[B,C](p2: Parser[B])(f: (A,B) => C): Parser[C] = self.map2(p, p2)(f)
     //def product[B](p2: Parser[B]): Parser[(A,B)] = self.product(p2)
     }
