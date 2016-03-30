@@ -1,0 +1,50 @@
+package fpinscala.testing
+
+import fpinscala.state._
+//import fpinscala.laziness.Stream
+//import fpinscala.parallelism._
+//import fpinscala.parallelism.Par.Par
+import Gen._
+import Prop._
+import java.util.concurrent.{Executors,ExecutorService}
+
+/*
+The library developed in this chapter goes through several iterations. This file is just the
+shell, which you can fill in and modify while working through the chapter.
+*/
+
+trait Prop {
+  def check: Boolean
+  def &&(p: Prop) = new Prop { def check = this.check && p.check}
+}
+
+object Prop {
+  def forAll[A](gen: Gen[A])(f: A => Boolean): Prop = ???
+}
+
+trait Gen[A] {
+  import fpinscala.state.RNG._
+  import scala.sys
+  import java.time.LocalTime
+  //def unit[A](a: => A): Gen[A] = Gen[A](RNG.Simple(LocalTime.now().getNano))
+  def unit[A](a: => A): Gen[A] = Gen[A](RNG.unit(a))
+  def choose(start: Int, stopExclusive: Int): Gen[Int] = Gen.unit(RNG.between(start, stopExclusive)(RNG.Simple(0))._1)
+  def map[A,B](f: A => B): Gen[B] = ???
+  def flatMap[A,B](f: A => Gen[B]): Gen[B] = ???
+//  def _choose(start: Int, stopExclusive: Int): Gen[Int] = {
+//    Gen.unit(go()(Simple(0))._1)
+//    def go(): Rand[Int] =
+//        flatMap(int) ({
+//           case (x) if (x % stopExclusive < start) => go()
+//           case (x) => RNG.unit(x % stopExclusive) 
+//      }
+//)
+//}
+}
+
+
+//case class Gen[A](sample: RNG.Rand[A])
+//trait SGen[+A] {
+//
+//}
+
